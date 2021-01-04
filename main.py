@@ -54,6 +54,7 @@ def main():
     fuel = 50                   # 50 is a full tank
     hunger = 0                  # hunger increases with num
 
+
     while not done:
         # TODO:  Check if reached END GAME
 
