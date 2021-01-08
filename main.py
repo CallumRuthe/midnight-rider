@@ -63,6 +63,55 @@ WE FAILED...
 ----- GAME OVER -----
 """
 
+LOSE_AGENTS = """
+THE AGENTS HAVE CLOSED IN ON YOU.
+THERE ARE AT LEAST 20 CARS SURROUNDING YOU.
+THE LEAD CAR BUMPS YOUR PASSENGER SIDE.
+YOU MANAGE TO CORRECT YOUR STEERING TO KEEP YOU FROM CRASHING.
+
+YOU DIDN'T SEE THE AGENTS CAR BESIDE YOU.
+THE DRIVER BUMPS YOUR CAR.
+AND THAT'S IT.
+
+YOU SPIN OUT OF CONTROL.
+THE CAR FLIPS OVER AT LEAST 2 TIMES.
+OR MORE... YOU LOST COUNT.
+
+SIRENS.
+
+"ARE THEY ALIVE?" SOMEONE ASKS.
+"DOESN'T MATTER. ALL WE WANTED WAS THE CAR."
+YOU SEE A DOG WALKING OUT OF THE CAR.
+"WAS IT IN THE CAR THE WHOLE TIME?" YOU 
+THINK TO YOURSELF.
+
+THE DOG LOOKS UP AT THE OFFICERS.
+"YOU WILL NEVER STOP THE REVOLUTION."
+"DID THE DOG JUST TALK?" YOU THINK TO YOURSELF.
+
+YOU DRIFT OFF INTO UNCONSCIOUSNESS.
+
+----- GAME OVER -----
+"""
+
+LOSE_FUEL = """
+YOUR CAR BEGINS TO SLOW DOWN.
+YOU PUT THE PETAL TO THE METAL.
+NOTHING HAPPENS. YOU KEEP SLOWING DOWN.
+YOU DON'T KNOW WHATS HAPPENING.
+
+THEN YOU CHECK YOUR FUEL.
+YOU TANK IS EMPTY. THERES NOTHING YOU CAN DO.
+YOU HEAR THE DISTANT SIRENS APPROACHING.
+
+YOU TRY AND MAKE A RUN FOR IT.
+BUT THEY CATCH YOU. IT'S OVER.
+THEY GOT THE CAR. 
+AND YOU...
+
+----- GAME OVER -----
+"""
+
 CHOICES = """
     ----
     A. Eat a tofu.
@@ -113,15 +162,23 @@ def main():
             type_text_output(WIN)
             break
         elif hunger > 45:
-            # TODO: Lose - too hungry
+            # Lose - too hungry
             # Print losing hunger scenario
             time.sleep(2)
             type_text_output(LOSE_HUNGER)
             break
+        elif agents_distance >= 0:
+            # Lose - too agents
+            # Print agent loss scenario
+            type_text_output(LOSE_AGENTS)
+            break
+        elif fuel <= 0:
+            # Lose - too fuel
+            # Print fuel loss scenario
+            type_text_output(LOSE_FUEL)
+            break
 
-
-
-        # TODO: Random events
+        # Random events
         # Fido
         if random.random() < TOFU_CHANCE:
             # Fido pops up says something and refills tofu
@@ -216,15 +273,17 @@ def main():
         elif users_choice == "q":
             done = True
 
-        # Increase hunger
+        # Upkeep - increase hunger and turn counter
         if users_choice not in ["a", "e"]:
-            hunger += random.randrange(5,13)
+            hunger += random.randrange(5, 13)
+            turns += 1
 
         # Pause
         time.sleep(1.2)
 
     # Outroduction
     print("Thanks for playing! Please play again. =)")
+    print(f"You finished the game in {turns} turns.")
 
 
 if __name__ == '__main__':
