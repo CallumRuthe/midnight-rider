@@ -48,6 +48,21 @@ You've seen it before, but only on TV.
 ----- GAME OVER -----
 """
 
+LOSE_HUNGER = """
+
+YOUR STOMACH IS EMPTY.
+WHO KNEW THAT WHAT THE DOCTOR SAID WAS TRUE,
+THAT HUMAN ROBOT HYBRIDS WOULD NEED 
+TOFU TO SUSTAIN THEMSELVES.
+YOUR ROBOT SYSTEMS START TO SHUT DOWN.
+YOUR HUMAN EYES CLOSE.
+THE LAST THING THAT YOU HEAR ARE SIRENS.
+THEY GOTCHU. THEY GOT THE CAR.
+WE FAILED...
+
+----- GAME OVER -----
+"""
+
 CHOICES = """
     ----
     A. Eat a tofu.
@@ -82,7 +97,7 @@ def main():
     # Variables
     done = False
 
-    km_traveled = 99
+    km_traveled = 0
     agents_distance = -20.0
     turns = 0
     tofu = MAX_TOFU_LEVEL
@@ -90,6 +105,22 @@ def main():
     hunger = 0
 
     while not done:
+        # Check if reached END GAME
+        if km_traveled >= MAX_DISTANCE_TRAVELLED:
+            # Win
+            # Print win scenario (stylistic typing)
+            time.sleep(2)
+            type_text_output(WIN)
+            break
+        elif hunger > 45:
+            # TODO: Lose - too hungry
+            # Print losing hunger scenario
+            time.sleep(2)
+            type_text_output(LOSE_HUNGER)
+            break
+
+
+
         # TODO: Random events
         # Fido
         if random.random() < TOFU_CHANCE:
@@ -101,23 +132,11 @@ def main():
             print("******** It's Fido.")
             print("******** He's using his tofu cooking skills.")
 
-        # TODO: Showing Hunger
+        # Showing Hunger
         if hunger > 35:
             print("******** You are starving. You should Eat soon.")
         elif hunger > 20:
             print("******** You can hear your stomach growling...")
-
-        # Check if reached END GAME
-        if km_traveled >= MAX_DISTANCE_TRAVELLED:
-            # Win
-            # Print win scenario (stylistic typing)
-            time.sleep(2)
-            type_text_output(WIN)
-            break
-        elif hunger > 45:
-            # TODO: Lose - too hungry
-            # Print losing hunger scenario
-            break
 
         # Give the player their choices
         print(CHOICES)
